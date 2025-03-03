@@ -3,6 +3,9 @@ import os
 from unittest.mock import patch
 
 import pytest
+from fastapi.testclient import TestClient
+
+from del_issue.app import app
 
 user_data = """
 {
@@ -24,6 +27,12 @@ def user_json():
 @pytest.fixture
 def user_dict():
     return json.loads(user_data)
+
+
+@pytest.fixture
+def client():
+    with TestClient(app) as client:
+        yield client
 
 
 @pytest.fixture(scope="session", autouse=True)
