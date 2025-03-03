@@ -1,0 +1,53 @@
+[project]
+name = "del-issue"
+version = "0.0.1"
+description = "Reproduces late call to `__del__` method of `DeleteDummyThreadOnDel`"
+authors = [
+    { name = "Jeff Robbins", email = "<79278744+jrobbins-LiveData@users.noreply.github.com>" },
+]
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "aiosqlite",
+    "fastapi",
+    "pydantic",
+    "pydantic-settings",
+    "sqlalchemy",
+    "sqlmodel",
+    "uvicorn[standard]",
+]
+
+[tool.poetry]
+requires-poetry = ">=2.1"
+packages = [
+    { include = "del_issue", from = "src" },
+]
+
+[tool.poetry.group.test.dependencies]
+httpx = "*"
+moto = "*"
+pytest = "*"
+pytest-asyncio = "*"
+pytest-cov = "*"
+
+[tool.pytest.ini_options]
+addopts = [
+    "--cov=src/del_issue",
+]
+testpaths = [
+    "tests/unit",
+]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "session"
+pythonpath = [
+    "src/del_issue",
+]
+filterwarnings = [
+    "error",
+]
+
+[build-system]
+requires = [
+    "poetry-core>=2.0.0,<3.0.0",
+]
+build-backend = "poetry.core.masonry.api"
